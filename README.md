@@ -1,1 +1,1 @@
-"# Challenge Take Blip" 
+ECHO est  ativado.
