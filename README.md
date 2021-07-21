@@ -1,1 +1,1 @@
-ECHO est  ativado.
+# Challenge-Chat-Bot-TakeBlip
