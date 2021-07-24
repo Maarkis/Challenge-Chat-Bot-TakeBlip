@@ -1,16 +1,11 @@
+using Application.Configuration;
+using ChallengeTakeBlip.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChallengeTakeBlip
 {
@@ -28,9 +23,12 @@ namespace ChallengeTakeBlip
         {
 
             services.AddControllers();
+            services.ConfigureDependency();
+            services.ConfigureDependeciesApiGithub(Configuration);
+            services.ConfigureCORS();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ChallengeTakeBlip", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Challenge Take Blip", Version = "v1" });
             });
         }
 
@@ -41,9 +39,14 @@ namespace ChallengeTakeBlip
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ChallengeTakeBlip v1"));
+                
             }
-
+            app.UseCors("AllowCORS");
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Challenge Take Blip v1");
+                c.RoutePrefix = string.Empty;
+            });
             app.UseHttpsRedirection();
 
             app.UseRouting();

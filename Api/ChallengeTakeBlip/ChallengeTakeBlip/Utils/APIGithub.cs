@@ -7,6 +7,7 @@ namespace ChallengeTakeBlip.Utils
 {
     public class APIGithub
     {
-        public string Token { get; private set; }
+        public string ProductName { get; set; }
+        public string Token { get; set; }
     }
 }
