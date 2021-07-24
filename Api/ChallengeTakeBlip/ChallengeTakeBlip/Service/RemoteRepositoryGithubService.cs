@@ -31,6 +31,9 @@ namespace ChallengeTakeBlip.Service
 
         public async Task<List<Repository>> GetLastFivePublicRepositoriesCSharp(string username, int amountRepositories = 5)
         {
+            if(string.IsNullOrEmpty(username))            
+                return null;
+            
             IReadOnlyList<Repository> repositories = await _client.Repository.GetAllForUser(username);
 
             List<Repository> listRepositories = IReadListToList(repositories);

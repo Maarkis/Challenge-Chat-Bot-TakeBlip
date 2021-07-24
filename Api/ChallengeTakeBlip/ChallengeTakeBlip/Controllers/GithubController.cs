@@ -4,6 +4,7 @@ using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,15 +24,23 @@ namespace ChallengeTakeBlip.Controllers
         
 
         [HttpGet]
-        public async Task<ActionResult> GetLastFivePublicRepositoriesCSharp(string username, int amountRepositories)
+        public async Task<ActionResult> GetLastFivePublicRepositoriesCSharp(string username, int amountRepositories = 5)
         {
-            var result = await _remoteRepositoryService.GetLastFivePublicRepositoriesCSharp(username, amountRepositories);
-            if(result == null)
+            try
             {
-                return NotFound();
-            }
+                List<Repository> result = await _remoteRepositoryService.GetLastFivePublicRepositoriesCSharp(username, amountRepositories);
+                if (result == null)
+                {
+                    return NotFound("Não encontrado.");
+                }
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+          
         }
 
     }

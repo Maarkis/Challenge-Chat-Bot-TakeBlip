@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace ChallengeTakeBlip
 {
@@ -26,9 +29,21 @@ namespace ChallengeTakeBlip
             services.ConfigureDependency();
             services.ConfigureDependeciesApiGithub(Configuration);
             services.ConfigureCORS();
+            
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Challenge Take Blip", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "Challenge Take Blip", 
+                    Version = "v1",
+                    Description = "API para resgatar repositórios de um usuário",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Jean Markis",
+                        Email = "jeanmarkis85@gmail.com",
+                        Url = new Uri("https://github.com/Maarkis/Challenge-Chat-Bot-TakeBlip"),
+                    }
+                });
+
             });
         }
 
@@ -37,8 +52,7 @@ namespace ChallengeTakeBlip
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
+                app.UseDeveloperExceptionPage();               
                 
             }
             app.UseCors("AllowCORS");
