@@ -33,6 +33,10 @@ namespace ChallengeTakeBlip.Service
         {
             if(string.IsNullOrEmpty(username))            
                 return null;
+
+            if (amountRepositories == 0)
+                amountRepositories = 5;          
+
             
             IReadOnlyList<Repository> repositories = await _client.Repository.GetAllForUser(username);
 
