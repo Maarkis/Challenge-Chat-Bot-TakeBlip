@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Interface\" />
   </ItemGroup>
 
 </Project>
