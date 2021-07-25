@@ -10,7 +10,7 @@
 
   Execute o comando:
 
-      dotnet run --project Application
+      dotnet run --project ChallengeTakeBlip
 
   Acesse: [HTTP - http://localhost:5000/swagger](http://localhost:5000/swagger) ou [HTTPS - https://localhost:5001/swagger](https://localhost:5001/swagger).
 
