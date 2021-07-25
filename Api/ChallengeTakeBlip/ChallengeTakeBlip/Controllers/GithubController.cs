@@ -1,9 +1,9 @@
 ﻿using ChallengeTakeBlip.Interface;
+using ChallengeTakeBlip.Utils.Response;
 using Microsoft.AspNetCore.Mvc;
 using Octokit;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -31,10 +31,10 @@ namespace ChallengeTakeBlip.Controllers
                 List<Repository> result = await _remoteRepositoryService.GetLastFivePublicRepositoriesCSharp(username, amountRepositories);
                 if (result == null)
                 {
-                    return NotFound("Não encontrado.");
+                    return NotFound(new BaseResponse { Message = "Não encontrado." });
                 }
 
-                return Ok(result);
+                return Ok(new GithubResponse { Message = "Encontrado com sucesso.", Successful = true, Repositories = result });
             }
             catch (ArgumentException e)
             {

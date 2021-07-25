@@ -1,5 +1,6 @@
 ﻿using ChallengeTakeBlip.Interface;
 using ChallengeTakeBlip.Utils;
+using ChallengeTakeBlip.Utils.Response;
 using Octokit;
 using System;
 using System.Collections.Generic;
@@ -30,25 +31,24 @@ namespace ChallengeTakeBlip.Service
         }
 
         public async Task<List<Repository>> GetLastFivePublicRepositoriesCSharp(string username, int amountRepositories = 5)
-        {
-            if(string.IsNullOrEmpty(username))            
+        { 
+            if (string.IsNullOrEmpty(username))
                 return null;
 
             if (amountRepositories == 0)
-                amountRepositories = 5;          
-
+                amountRepositories = 5;
             
             IReadOnlyList<Repository> repositories = await _client.Repository.GetAllForUser(username);
 
             List<Repository> listRepositories = IReadListToList(repositories);
-
+            
             List<Repository> repositoriesCSHARP = FindAllCSharpLanguageRepositories(listRepositories);
-
+            
             repositoriesCSHARP = repositoriesCSHARP.OrderBy(f => f.CreatedAt).ToList();
-
+            
             repositoriesCSHARP = GetFiveRepositories(repositoriesCSHARP, amountRepositories);
-
-            return repositoriesCSHARP;
+            
+            return repositoriesCSHARP;            
         }
 
         private List<Repository> IReadListToList(IReadOnlyList<Repository> repositories)
